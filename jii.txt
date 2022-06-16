@@ -1,0 +1,76 @@
+var geojson;
+var featureOverlay;
+
+var qryButton = document.createElement('button');
+qryButton.innerHTML = '<img src="resources/images/db.png" alt="" style="width:17px;height:17px;filter:brightness(0) invert(1);vertical-align:middle"></img>';
+qryButton.className = 'myButton';
+qryButton.id = 'qryButton';
+
+var qryElement = document.createElement('div');
+qryElement.className = 'myButtonDiv';
+qryElement.appendChild(qryButton);
+
+var qryControl = new ol.control.Control({
+    element: qryElement
+})
+
+var qryFlag = false;
+qryButton.addEventListener("click", () => {
+    // disableOtherInteraction('lengthButton');
+    qryButton.classList.toggle('clicked');
+    qryFlag = !qryFlag;
+    document.getElementById("map").style.cursor = "default";
+    if (qryFlag) {
+        if (geojson) {
+            geojson.getSource().clear();
+            map.removeLayer(geojson);
+        }
+
+        if (featureOverlay) {
+            featureOverlay.getSource().clear();
+            map.removeLayer(featureOverlay);
+        }
+        document.getElementById("attQueryDiv").style.display = "block";
+
+        bolIdentify = false;
+
+        addMapLayerList();
+    } else {
+        document.getElementById("attQueryDiv").style.display = "none";
+        document.getElementById("attListDiv").style.display = "none";
+
+        if (geojson) {
+            geojson.getSource().clear();
+            map.removeLayer(geojson);
+        }
+
+        if (featureOverlay) {
+            featureOverlay.getSource().clear();
+            map.removeLayer(featureOverlay);
+        }
+    }
+
+})
+
+map.addControl(qryControl);
+
+function addMapLayerList_spQry() {
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/geoserver/wfs?request=getCapabilities",
+            dataType: "xml",
+            success: function (xml) {
+                var select = $('#selectLayer');
+                select.append("<option class='ddindent' value=''></option>");
+                $(xml).find('FeatureType').each(function () {
+                    $(this).find('Name').each(function () {
+                        var value = $(this).text();
+                        select.append("<option class='ddindent' value='" + value + "'>" + value + "</option>");
+                    });
+                });
+            }
+        });
+    });
+
+};

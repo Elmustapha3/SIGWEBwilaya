@@ -1,0 +1,52 @@
+
+settingsButton = document.createElement('button');
+settingsButton.innerHTML = '<img src="setting.png" alt=""class="myImg"></img>';
+settingsButton.className= 'myButton';
+settingsButton.id = 'settingsButton';
+settingsButton.title= 'Settings';
+var settingElement = document.createElement('div');
+settingElement.className= 'myButtonDiv';
+settingElement.appendChild(settingsButton);
+toolbarDivElement.appendChild(settingsButton);
+
+
+var settingFlag = false;
+settingsButton.addEventListener("click", () => {
+settingsButton.classList.toggle('clicked');
+settingFlag=!settingFlag;
+document.getElementById("map").style.cursor = "default";
+if (settingFlag) {
+document.getElementById("settingsDiv").style.display="block";
+addMapLayerList('editingLayer');
+} else {
+document.getElementById("settingsDiv").style.display="none";
+}
+})
+
+
+var settingButton = document.createElement('button');
+settingButton.innerHTML = '<img src="setting.png" alt="" style="width:20px;height:20px;filter:brightness(0) invert(1);vertical-align:middle"></img>';
+settingButton.className = 'myButton';
+settingButton.id = 'settingsButton';
+
+var settingElement = document.createElement('div');
+settingElement.className = 'homeButtonDiv';
+settingElement.appendChild(settingButton);
+
+var settingControl = new ol.control.Control({
+    element: settingElement
+})
+map.addControl(settingControl);
+
+var settingFlag = false;
+settingsButton.addEventListener("click", () => {
+    settingsButton.classList.toggle('clicked');
+    settingFlag=!settingFlag;
+    document.getElementById("map").style.cursor = "default";
+    if (settingFlag) {
+    document.getElementById("settingDiv").style.display="block";
+    addMapLayerList('editingLayer');
+    } else {
+    document.getElementById("settingDiv").style.display="none";
+}
+})
