@@ -1,0 +1,423 @@
+
+body {
+    background-image: url("back.jpg");
+    background-color: #cccccc;
+   }
+  #map {
+      position: absolute;
+      width: 100vw;
+      height: 97vh;
+  }
+  .layerSwitcher{
+      width: 50px;
+
+  }
+  
+  
+  .mousePosition {
+      position: absolute;
+      top: auto;
+      right: auto;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%); 
+      border: 2px solid rgb(51, 47, 47); 
+      border-radius: 10px;
+      padding: 5px;
+      background-color: rgba(206, 206, 206, 0.4); 
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 12px;
+      font-weight: bolder;
+  }
+  
+  .ol-popup {
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #cccccc;
+      bottom: 12px;
+      left: -50px;
+      min-width: 280px;
+    }
+    .ol-popup:after, .ol-popup:before {
+      top: 100%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+    .ol-popup:after {
+      border-top-color: white;
+      border-width: 10px;
+      left: 48px;
+      margin-left: -10px;
+    }
+    .ol-popup:before {
+      border-top-color: #cccccc;
+      border-width: 11px;
+      left: 48px;
+      margin-left: -11px;
+    }
+    .ol-popup-closer {
+      text-decoration: none;
+      position: absolute;
+      top: 2px;
+      right: 8px;
+    }
+    .ol-popup-closer:after {
+      content: "✖";
+    }
+  
+    .myButton {
+      background-color:rgba(22, 19, 19, 0.918);
+      color: rgb(255, 255, 255);
+      font-weight:700;
+      text-align: center;
+      height: 40px;
+      width: 40px;
+      border-radius: 0px;
+      align-items:flex-start ;
+  }
+  
+  .myButton:hover{
+    background-color: rgb(83, 143, 153);
+  }
+  
+  .myButton.clicked{
+    background-color: rgb(83, 143, 153);
+  }
+  
+  .myButton.clicked:hover{
+  background-color: rgb(83, 143, 153);
+  }
+  
+  .homeButtonDiv{
+    position: relative;
+    display: block;
+    margin: 10px auto auto 10px;
+  }
+  
+  .fsButtonDiv {
+    position: relative;
+    display: block;
+    margin: 1px auto auto 10px;
+  }
+  
+  .featureInfoDiv {
+    position: relative;
+    display: block;
+    margin: 1px auto auto 10px;
+  }
+  
+  .lengthButtonDiv {
+    position: relative;
+    display: block;
+    margin: 1px auto auto 10px;
+  }
+  
+  .areaButtonDiv {
+    position: relative;
+    display: block;
+    margin: 1px auto auto 10px;
+  }
+  
+    /* start : Measure styling */
+  
+    .ol-tooltip {
+      position: relative;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+      color: white;
+      padding: 4px 8px;
+      opacity: 0.7;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+    .ol-tooltip-measure {
+      opacity: 1;
+      font-weight: bold;
+    }
+    .ol-tooltip-static {
+      background-color: #ffcc33;
+      color: black;
+      border: 1px solid white;
+    }
+    .ol-tooltip-measure:before,
+    .ol-tooltip-static:before {
+      border-top: 6px solid rgba(0, 0, 0, 0.5);
+      border-right: 6px solid transparent;
+      border-left: 6px solid transparent;
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      margin-left: -7px;
+      left: 50%;
+    }
+    .ol-tooltip-static:before {
+      border-top-color: #ffcc33;
+    }
+  
+    /* end : Measure styling */
+  
+    .ol-dragbox {
+      border: 2px dashed grey;
+      background-color: rgba(200, 200, 200, 0.6);
+    }
+  
+    .ziButtonDiv {
+      position: relative;
+      display: block;
+      margin: 1px auto auto 10px;
+    }
+  
+    .zoButtonDiv {
+      position: relative;
+      display: block;
+      margin: 1px auto auto 10px;
+    }
+  
+    .myButtonDiv {
+      position: relative;
+      display: block;
+      margin: 1px auto auto 10px;
+    }
+    
+  
+    .attQueryDiv {
+      position: absolute;
+      display: none;
+      margin: 10px 10px;
+      /* padding: 10px; */
+      width: 250px;
+      /* height: 250px; */
+      background-color: rgba(255, 255, 255, 0.9);
+      font-family: inherit;
+      font-size: 1em;
+      line-height: 1.45;
+      border-radius: 2px;
+      border: 1px solid #d1d1d1;
+      box-shadow: 0px 0px 15px rgba(252, 213, 213, 0.5);
+      /* z-index: 4; */
+      /* overflow: scroll; */
+    }
+   
+    
+    #headerDiv{
+      background-color: midnightblue;
+      height: 35px;
+    }
+    
+    #headerDiv label {
+    color: white;
+    }
+  
+    .attQueryDiv select {
+      width: 225px;
+      height: 35px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      margin: 0px auto 0px 10px;
+    }
+    
+    .attQueryDiv input {
+      width: 225px;
+      height: 35px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      margin: 0px auto 0px 10px;
+    }
+    
+    .attQueryDiv label {
+      color: grey;
+      margin: 10px 10px 0px 10px;
+    }
+    
+    .attQueryDiv label:nth-child(1) {
+      margin: 10px;
+      font-weight: bold;
+     }
+    
+    .attQryRun {
+      color: white;
+      background-color: green;
+      border-radius: 3px;
+      border: 1px solid darkgreen;
+      height: 35px;
+      width: 50px;
+      margin: 10px;
+    }
+  
+    .attListDiv {
+      position: absolute;
+      display: none;
+      margin: 350px auto auto 350px;
+      /* padding: 10px; */
+      width: auto;
+      max-width: 750px;
+      /* height: auto; */
+      /* max-height: 250px; */
+      height: 250px;
+      background-color: rgba(255, 255, 255, 0.9);
+      font-family: inherit;
+      font-size: 1em;
+      line-height: 1.45;
+      border-radius: 2px;
+      border: 1px solid #d1d1d1;
+      box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);
+      /* z-index: 5; */
+      overflow: scroll;
+    }
+    
+    #attQryTable {
+      padding: 0;
+      border-collapse: collapse;
+    }
+    .locate {
+      top: 6em;
+      left: .5em;
+    }
+    
+    #attQryTable, td, th {
+      padding: 0px 5px 0px 5px;
+      border: 1px solid black;
+    }
+    
+    #attQryTable th {
+      color: white;}
+      .spUserInput {
+          color: white;
+          background-color:rgb(0, 0, 0);
+          border-radius: 3px;
+          border: 1px solid rgb(0, 0, 0);
+          height: 35px;
+          width: 50px;
+          margin: 10px;
+          }
+          #bufferDistance{
+          width: 100px;}
+          #distanceUnits {
+          width: 100px;
+          margin: 0px auto 0px 20px;;
+          }
+          .spUserInput.clicked{
+          background-color: rgb(230, 107, 107) rgb(95, 125, 207);}
+          .spQryRun {
+            color: white;
+            background-color: green;
+            border-radius: 3px;
+            border: 1px solid black;
+            height: 35px;
+            width: 50px;
+            margin: 10px 22px 10px 22px;
+            }
+            .sporyClear{
+            /* position: absolute; */
+            color: white;
+            background-color: slategrey;
+            border-radius: 3px;
+            border: 1px solid black;
+            height: 35px;
+            width: 50px;
+            margin: 10px;}
+      
+      
+            .spQueryDiv {
+              position: absolute;
+              display: none;
+              top: 10px;
+              left: 45px;
+              /* margin: 65px auto auto 45px; */
+              width: 250px;
+              /* height: 250px; */
+              background-color:
+              rgba(255, 255, 255, 0.9);
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              font-size: 1em;
+              line-height: 1.45;
+              border-radius: 2px;
+              border: 1px solid
+              #d1d1d1;
+              box-shadow: 0px 0px 15px rgba(100, 100, 100, 0.5);
+              /* z-index: 4; */
+              /* overflow: scroll; */
+              }
+      .spQueryDiv select{
+      width: 225px;
+      height: 35px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      margin: px auto 28px 18px;}
+      .spQueryDiv input {
+      width: 225px;
+      height: 35px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+      margin: 0px auto 20px 18px;
+      }
+      .spQueryDiv label {
+      color:grey;
+      margin: 18px 18px 0px 10px;
+      }
+      .settingDiv{
+        position: absolute;
+        display: none;
+        margin: 360px auto auto 45px;
+        width: 250px;
+        /* height: 250px; */
+        background-color:
+        rgba(255, 255, 255, 0.9);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1em;
+        line-height: 1.45;
+        border-radius: 2px;
+        border: 1px solid #d1d1d1;
+        box-shadow: 0px 0px 15px rgba(100, 100, 100, 0.5);
+        
+      }
+    .settingDiv select {
+        width: 225px;
+        height: 35px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        margin: 0px auto 20px 10px;
+        }
+    .settingDiv label{
+        color:grey;
+        margin:10px 10px 0px 10px;
+        
+    }
+      
+    #btnCrosshair {
+      z-index: 2000;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0);
+      width: 40px;
+      height: 40px;
+      right: 20px;
+      bottom: 20px;
+      border: none;
+      color: rgb(13, 131, 33);
+      }
+      #btnCrosshair.clicked{
+      color: rgb(17, 9, 9);
+      }
+      @media print{
+        /* hide every other element */
+        body *{
+          visibility:hidden;
+        }
+        .map, .map *{
+          visibility: visible;
+        } 
+        .map {
+          position:absolute;
+          left:0px;
+          top:0px;
+        }
+        }
+     
+      
