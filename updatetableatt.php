@@ -6,7 +6,7 @@ if(!isset($_SESSION['username'])){
 }else{
     $username=$_SESSION['username'];
 }
-
+$idlayer='';
 if(isset($_GET['idlayer'])){
     $idlayer = $_GET['idlayer'];
     }
@@ -21,7 +21,7 @@ include('database/connexion.php');
     }
 
 
-    $sql = 'SELECT * FROM public."'.$layname.'"';
+    $sql = 'SELECT * FROM public."'.$layname.'" ORDER BY id ASC';
     $table= $con->query($sql);
     //$table= $con->prepare($sql);
     //$table->execute([$layname]);
@@ -43,9 +43,15 @@ include('database/connexion.php');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="css.css"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
- 
+    <link rel="shortcut icon" href="resources/images/logorm.png">
+
       <title><?php echo $layname; ?></title>
 </head>
+<style>
+.over{
+    overflow:auto;
+}
+</style>
 <body>
     <?php
     
@@ -62,47 +68,80 @@ include('database/connexion.php');
         
     ?>
         <h3 class="p-4">La table attributaire de la couche <span class="text-info mx-2"><?php echo $layname;  ?></span> </h3>
-        <div class="text-end m-3">
-            <?php
-                if(isset($_SESSION['numuser'])){
-                    if($_SESSION['modifiertable']==true){
-                    echo '<a href="#" class="btn btn-primary">Modifier la table</a>';
-                    } 
-                }
-            ?>
-            <a href="layer.php?idlayer=<?php echo $idlayer; ?>" class="btn btn-primary">retour</a></br>
-        </div>
+        <form action="updatetableatt.php" method="post">
+
+                
+                <div class="text-end m-3">
+                    <button class="btn bg-secondary" name="comfirmer">Save Modification</button>
+                    <a href="layer.php?idlayer=<?php echo $idlayer; ?>" class="btn btn-primary">retour</a></br>
+                </div>
+                <div class="over">
                     <table class="table table-striped text-center">
                         
-                            <?php 
-                            echo '<tr>';
-                            for($i=0;$i<count($result);$i++){                            
-                                    echo '<th class="p-2 px-3" scope="row">'.$result[$i][0].'</th>';
-                                }
-                            echo '</tr>';
-                            foreach($table as $row){   
-                            echo '<tr>';
-                            for($i=0;$i<count($result);$i++){ 
-                                echo "<input class='p-2 ' scope='row' type='text' value='".$row[$result[$i][0]]."' name='' id=''>";                           
+                        <?php 
+                        echo '<tr>';
+                        for($i=0;$i<count($result);$i++){                            
+                                echo '<th class="p-2 px-3" scope="row">'.$result[$i][0].'</th>';
                             }
-                                                        
-                            echo '</tr>';
-                            }
+                        echo '</tr>';
+                        $j=0;
+                        foreach($table as $row){   
+                        echo '<tr>';
+                        for($i=0;$i<count($result);$i++){ 
+                            echo "<td><input class='p-2 ' scope='row' type='text' value='".$row[$result[$i][0]]."' name='$j' id=''></td>"; $_SESSION['tableattributaire'][]=$row[$result[$i][0]];$j++;                          
+                        }
+                                                    
+                        echo '</tr>';
+                        }
 
-                           
-                                
-                                
+                    
                             
-
-                            ?>
+                            
                         
+
+                        ?>
+                                    
                     </table>
+                </div>
+    </form>
     
 
-    <?php
-       // include("componemnts/footer.php");
-    ?>
+        <?php
+            include("footer.php");
+        ?>
             
 </body>
 </html>
 
+<?php
+
+
+if(isset($_POST['comfirmer'])){
+    /*session_start();
+    $sql = 'SELECT * FROM public."'.$layname.'" ORDER BY fid ASC';
+    $table= $con->query($sql);
+
+    $sqlcolumn = "SELECT column_name  FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '$layname' AND column_name <> 'geom' AND column_name <> 'the_geom' ";
+    $col= $con->query($sqlcolumn);
+    $result = $col->fetchAll(PDO::FETCH_BOTH);
+    $d=0;
+    $l=1;
+    foreach($table as $row){   
+        
+        for($i=0;$i<count($result);$i++){ 
+            if($_POST[$d]!=$_SESSION['tableattributaire'][$d]){
+                $sql = 'update '.$layname.' set '.$result[$i][0].' = '.$_GET[$d].' where fid=?' ;
+                $mod= $con->prepare($sql);
+                $mod->execute([$l]);
+            }
+            
+            $d++;
+        }
+                                    
+        $l++;
+        }
+        $_SESSION['idlaytableattupdated']=$idlayer;
+        echo "<script> window.location.href='tableattr.php';</script>";*/
+    }
+
+?>

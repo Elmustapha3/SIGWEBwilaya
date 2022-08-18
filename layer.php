@@ -29,11 +29,11 @@ if(isset($_GET['idlayer'])){
         $owner->execute([$idp]);
         foreach($owner as $ow){
             $cni=$ow['cni'];
-            $propriétaire= $ow['prenom'].' '.$ow['nom'];
+            $ajouterpar= $ow['prenom'].' '.$ow['nom'];
         }
 
 
-        $a=''; $b=''; $c='';$d='';$e='';$f='';
+        $a=''; $b=''; $c='';$d='';$e='';$f='';$g="";
       
 ?>
 
@@ -51,13 +51,31 @@ if(isset($_GET['idlayer'])){
     <link rel="stylesheet" href="resources/layerswitcher/ol-layerswitcher.css"/>
     <link rel="stylesheet" href="sss.css"/>
     <link rel="stylesheet" href="fontawesome/css/all.css"/>
+    <link rel="shortcut icon" href="resources/images/logorm.png">
+
     
   </head>
   <style>
+
+
 .px-3{
     height: 100vh;
 }
+#modif{
+  overflow: auto;
+  background-image: url("back.jpg");
 
+}
+.dark{
+  color:#000;
+}
+.ola h6{
+  font-weight: bold; 
+  font-family: "Times New Roman", Times, serif !important;
+
+ }
+ .ola{
+ }
 </style>
   <body>
 
@@ -91,47 +109,79 @@ if(isset($_GET['idlayer'])){
             }
             ?>
             <div id="map" class="map"></div>
-            <div class="list-group bg-dark text-light px-3 w-25 ">
+            <div class="list-group bgdark text-light rounded-0 px-3 w-25 ">
                 <?php 
                   $sql = "select * FROM layers WHERE idlayer = ? ";
                   $stmt= $con->prepare($sql);
                   $stmt->execute([$idlayer]);
                   foreach($stmt as $lay){ ?>
-                      <h5 class="my-2"><?php echo $lay['layername']; ?></h5>
-                      <p>description :</p>
-                      <p><?php echo $lay['description']; ?></p>
-                      <p>Ajouter le <?php echo $lay['datecreer']; ?></p>
-                      <p>Propriétaire : <?php echo $propriétaire.' CNI : '.$cni; ?></p>
-                      <p>Permission :  </p>
+                      <h4 class="mb-3 py-3 text-center w-100 border-bottom"><?php echo $lay['layername']; ?></h4>
+                      <div id="modif" class="my-2 text-dark  rounded p-2 ola">
+                          <h6 class="">Description </h6>
+                          <p><?php echo $lay['description']; ?></p>
+                          <h6>Date d'ajoute</h6>
+                          <p> <?php echo $lay['dateajouter']; ?></p>
+                          <h6>Ajouter par</h6>  
+                          <p><?php echo $ajouterpar.' CNI : '.$cni; ?></p>
+                          <h6>Propriétaire origine de la couche</h6>  
+                          <p><?php echo $lay['nameproprietaire']; ?></p>
+                          <h6>Date de création de la couche</h6>  
+                          <p><?php echo $lay['datecreer']; ?></p>
+                          <h6>Contact propriétaire</h6>  
+                          <p><?php echo $lay['emailproprietaire']; ?></p>
+                          
+                          <div class="p-2 my-2 " id="modif">
+                            <h6 class="dark">Les modifications faites sur la couche</h6>
+                              <?php
+                                  $sqllaymod = "select * from updating where idlayer=? order by date";
+                                  $laymod= $con->prepare($sqllaymod);
+                                  $laymod->execute([$idlayer]);
+                              ?>
+                              <?php $i=1; foreach($laymod as $laymodd){
+                                $sql = 'select  nom, prenom, cni from users where numuser='.$laymodd["numuser"].';';
+                                $user= $con->query($sql);
+                                foreach($user as $row){
+                                  echo "<div class='h6'>Modification $i</div>";
+                                    echo $laymodd['modification'].'<br>';
+                                    echo 'Le '.$laymodd["date"].'<br>';
+                                    echo '<div class="border-bottom">Par '.$row["prenom"].' '.$row["nom"].', CNI '.$row["cni"].'</div><br><br>';
+                                }
+                              
+                                  $i++;
+                              }
+                              ?>
+                          </div>
+                      </div>
+                      <h6>Permission   </h6>
                       <?php if(isset($_SESSION['username'])){
                               if($_SESSION['modifierdesc']==true || $idp==$_SESSION['numuser']){
-                                echo "<a href='database/updatemeta.php?update=$idlayer' class='btn btn-primary my-1'>Modifier les donnes</a>";
+                                echo "<a href='database/updatemeta.php?update=$idlayer' class='btn btn-secondary my-1'>Modifier les données</a>";
                               } }?>
                             <div class="btn-group">
-                              <button type="button" class="btn btn-primary lext-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Teleccharger</button>
+                              <button type="button" class="btn btn-secondary lext-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Télécharger</button>
                               <div class="dropdown-menu dropdown-menu-right">
                                 <a href="http://localhost/geoserver/ows?request=GetFeature&service=WFS&version=2.0.0&typename=wilayaSIG:<?php echo $lay['layername'];?>&outputformat=JSON" class="dropdown-item btn" download >GeoJSON</a>
                                 <a href="http://localhost/geoserver/ows?request=GetFeature&service=WFS&version=2.0.0&typename=wilayaSIG:<?php echo $lay['layername'];?>&outputformat=CSV" class="dropdown-item btn" download>CSV</a>
                               </div>
                             </div>
                             <?php
-                            echo "<a href='tableattr.php?idlayer=$idlayer' class='btn btn-primary my-1'> Voir table attributaire</a>";
+                            echo "<a href='tableattr.php?idlayer=$idlayer' class='btn btn-secondary my-1'> Voir la table attributaire</a>";
                             
                            if(isset($_SESSION['username'])){
                             if( $lay['layerpartager']==false ){
                               if($_SESSION['partagercouche']==true || $idp==$_SESSION['numuser']){  
-                                    echo '<a href="sharelayer.php?idlayer='.$idlayer.'" class="btn btn-primary my-1"> Partager la couche</a>';
+                                    echo '<a href="sharelayer.php?idlayer='.$idlayer.'" class="btn btn-secondary my-1"> Partager la couche</a>';
                             }}
                           if($_SESSION['supprimercouche']==true || $idp==$_SESSION['numuser']){
-                            echo "<a href='database/delete.php?idlayer=$idlayer' class='btn btn-primary my-1'>Supprimer la couche</a>";
+                            echo "<a href='database/delete.php?idlayer=$idlayer' class='btn btn-secondary my-1'>Supprimer la couche</a>";
                             }        
                                 
                             
-                            echo '<a href="mylayers.php" class="btn btn-light text-dark my-1">Tout vos couches</a>';
+                            echo '<a href="mylayers.php" class="btn btn-light text-dark my-1">Toutes vos couches</a>';
                             
                           }
                   }?>
-                    <a href="index.php" class="btn btn-light text-dark my-1">Tout les couches</a>
+                    <a href="index.php" class="btn btn-light text-dark my-1">Toutes les couches</a>
             </div>
         </div>
           
@@ -247,12 +297,8 @@ if(isset($_GET['idlayer'])){
     </div>
 
 
+    <?php  include('footer.php');?>
 
-    <?php 
-         
-    //include("componemnts/footer.php");
-  
-       ?>
 
     <script src="resources/ol/ol.js"></script>
     <script src="resources/layerswitcher/ol-layerswitcher.js"></script>

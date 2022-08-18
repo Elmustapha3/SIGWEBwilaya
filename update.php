@@ -1,4 +1,6 @@
 <?php
+        $a=''; $b=''; $c='';$d='activ'; $e=''; $f=''; $g="";
+
         session_start();
         if(!isset($_SESSION['username'])){
         header('location:index.php');
@@ -27,7 +29,9 @@ $cniupdated = $_GET['cni'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
- 
+    <link rel="shortcut icon" href="resources/images/logorm.png">
+    <link rel="stylesheet" href="sss.css"/>
+
     <title>Document</title>
 </head>
 <body>
@@ -47,24 +51,24 @@ $cniupdated = $_GET['cni'];
                     <table class="table">
                         <tr>
                             <td class=" text-center"><lable class=" " for="">CNI : <span class="text-danger">*</span> </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="" name="cni" value="<?php echo $rr['cni'] ;?>"  placeholder="Saisie le CNI"/></td>
+                            <td><input type="text" class="p-1 px-3 my-2 form-control w-75" id="" name="cni" value="<?php echo $rr['cni'] ;?>"  placeholder="Saisir le CNI"/></td>
                         </tr>
                         <tr>
-                            <td  class=" text-center"><lable class=" " for="">Prenom : <span class="text-danger">*</span> </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="" name="prenom" value="<?php echo $rr['prenom'] ;?>"  placeholder="Saisie le prenom"/></td>
+                            <td  class=" text-center"><lable class=" " for="">Prénom : <span class="text-danger">*</span> </label></td>
+                            <td><input type="text" class="p-1 px-3 my-2 form-control w-75" id="" name="prénom" value="<?php echo $rr['prenom'] ;?>"  placeholder="Saisir le prenom"/></td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class=" " for="nom">Nom : <span class="text-danger">*</span> </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="nom" name="nom" value="<?php echo $rr['nom'] ;?>"  placeholder="Saisie le nom"/></td>
+                            <td><input type="text" class="p-1 px-3 my-2 form-control w-75" id="nom" name="nom" value="<?php echo $rr['nom'] ;?>"  placeholder="Saisir le nom"/></td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class="" for="email">Email :</label></td>
-                            <td><input type="email" class="p-1 px-3 my-2" id="email" name="email" value="<?php echo $rr['email'] ;?>"  placeholder="Saisie l'email"/></td>
+                            <td><input type="email" class="p-1 px-3 my-2 form-control w-75" id="email" name="email" value="<?php echo $rr['email'] ;?>"  placeholder="Saisir l'email"/></td>
                         </tr>
                         <tr>
-                            <td  class=" text-center"><lable class=" " for="">Post de travail : <span class="text-danger">*</span> </label></td>
+                            <td  class=" text-center"><lable class=" " for="">Poste de travail : <span class="text-danger">*</span> </label></td>
                             <td>
-                                <SELECT class="p-1 px-4 my-2" name="workpost" size="1">
+                                <SELECT class="p-1 px-4 my-2 form-select w-75" name="workpost" size="1">
                                     <option value="" >choisir un poste</option>
                                     <?php 
                                     
@@ -101,14 +105,14 @@ $cniupdated = $_GET['cni'];
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class=" " for="password">Nom d'utilisateur<span class="text-danger">*</span> </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" name="username" value="<?php echo $rr['username'] ;?>" placeholder="username"/></td>
+                            <td><input type="text" class="p-1 px-3 my-2 form-control w-75" name="username" value="<?php echo $rr['username'] ;?>" placeholder="username"/></td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class=" " for="password">Mot de passe <span class="text-danger">*</span> </label></td>
-                            <td><input type="password" class="p-1 px-3 my-2" id="password" name="password" value="<?php echo $rr['password'] ;?>" placeholder="Saisie un mot de passe"/></td>
+                            <td><input type="password" class="p-1 px-3 my-2 form-control w-75" id="password" name="password" value="<?php echo $rr['password'] ;?>" placeholder="Saisie un mot de passe"/></td>
                         </tr>
                     </table>
-                    <h3 class="m-4 mx-5 px-4 ">les droits d'acces pour l'utilisateur : <span class="text-danger">*</span> </h3>
+                    <h3 class="m-4 mx-5 px-4 ">les droits d'accés pour l'utilisateur : <span class="text-danger">*</span> </h3>
                                     
                                     <?php if($rr['partager']==1){ $checkp='checked';}else{ $checkp='';} if($rr['modifierdesc']==1){ $checkm='checked';}else{ $checkm='';} if($rr['supprimer']==1){ $checks='checked';}else{ $checks='';} if($rr['voirlayernonpartager']==1){ $checkv='checked';}else{ $checkv='';}  ?>
                         <div class="container mx-5 px-5">
@@ -117,7 +121,7 @@ $cniupdated = $_GET['cni'];
                                 <input class="form-check-input mx-3" type="checkbox" <?php echo $checkp; ?> value="partager"  name="partager" id="flexSwitchCheckDefaulta">
                             </div>
                             <div class="form-check form-switch  my-3">
-                                <label class="form-check-label" for="flexSwitchCheckDefaultb">Modifier les métadonnée des couches</label>
+                                <label class="form-check-label" for="flexSwitchCheckDefaultb">Modifier les métadonnées des couches</label>
                                 <input class="form-check-input mx-3" type="checkbox" value="modifier"  <?php echo $checkm; ?> name="modifier" id="flexSwitchCheckDefaultb">
                             </div>
                             <div class="form-check form-switch  my-3"> 
@@ -125,15 +129,15 @@ $cniupdated = $_GET['cni'];
                                 <input class="form-check-input mx-3" type="checkbox"  value="supprimer"  <?php echo $checks; ?> name="supp" id="flexSwitchCheckDefaultc">
                             </div>
                             <div class="form-check form-switch  my-3"> 
-                                <label class="form-check-label" for="flexSwitchCheckDefaultd">Voir la liste des couches non partages</label>
+                                <label class="form-check-label" for="flexSwitchCheckDefaultd">Voir la liste des couches non partagées</label>
                                 <input class="form-check-input mx-3" type="checkbox"  value="voirnonpartager" <?php echo $checkv; ?> name="voirnonpartager" id="flexSwitchCheckDefaultd">
                             </div>
                         </div>
                         <div class="err text-center text-danger h5"></div>
                         <div class="yes text-center h5 text-success"></div>
                         <div class="text-center">
-                            <a href="administrerUser.php" class="px-5 my-3 bg-primary btn text-light" >Annuler</a>
-                            <input type="submit" class="px-5 my-3 bg-primary btn text-light" value="Modifier" name="update"/>
+                            <a href="administrerUser.php" class="px-5 my-3 bg-secondary btn text-light" >Annuler</a>
+                            <input type="submit" class="px-5 my-3 bg-secondary btn text-light" value="Modifier" name="update"/>
                         </div>
                         <?php }?>
                 </form>
@@ -141,7 +145,7 @@ $cniupdated = $_GET['cni'];
         </div>
     
     <?php
-    include('componemnts/footer.php');
+    include('footer.php');
     ?>
 </body>
 </html>

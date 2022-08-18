@@ -1,5 +1,7 @@
 <?php
         session_start();
+        $a=''; $b=''; $c='';$d=''; $e=''; $d="";$f='activ';$g=""; 
+
         if(!isset($_SESSION['username'])){
         header('location:index.php');
         }else{
@@ -18,6 +20,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="resources/images/logorm.png">
+    <link href="sss.css" rel="stylesheet" >
+
  
     <title>Document</title>
 </head>
@@ -35,12 +40,15 @@
             <form action="addpost.php" method="post">
                 <table>
                     <tr class="mx-5">
-                        <td class="p-3"><label for="addpost">Saisie le nouveau post de travail : </label></td>
-                        <td class="p-3" ><input type="text" class="" name="newpost" id="" placeholder='nouveau post'></td>
-                        <td class="p-3"><button class=" btn bg-primary text-light" name="ajouter">Ajouter</button></td>
+                        <td class="p-3 h6"><label for="addpost">Saisir un nouveau poste de travail : </label></td>
+                        <td class="p-3" ><input type="text" class="form-control " name="newpost" id="" placeholder='nouveau poste'></td>
                     </tr>
                 </table>
-                
+                <div class="p-3 text-center">
+                    <a href="postravail.php" class="btn bg-secondary text-light">Annuler</a>
+                    <button class=" btn bg-secondary text-light" name="ajouter">Ajouter</button>
+                </div>
+
             </form>
             </div>
             
@@ -48,7 +56,7 @@
     </div>
     
     <?php
-    //include('componemnts/footer.php');
+    include('footer.php');
     ?>
 </body>
 </html>

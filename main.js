@@ -104,14 +104,14 @@ var map = new ol.Map({
 var osmTile = new ol.layer.Tile({
     title: 'Open Street Map',
     type: 'base',
-    visible: true,
+    visible:false,
     attributions: '',
     source: new ol.source.OSM()
 });
 var satellite = new ol.layer.Tile({
     title: 'satellite',
     type: 'base',
-    visible: false,
+    visible: true,
     source: new ol.source.XYZ({
             attributions: ['Powered by Esri',
                 'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
@@ -395,15 +395,15 @@ map.on('singleclick', function (evt) {
         content.innerHTML = '';
         var resolution = mapView.getResolution();
 
-        var url = indiaDsTile.getSource().getFeatureInfoUrl(evt.coordinate, resolution,
-            'EPSG:3857', { 'INFO_FORMAT': 'application/json', 'propertyName': 'dist_name,state_name' });
+        var url = Communes_Region.getSource().getFeatureInfoUrl(evt.coordinate, resolution,
+            'EPSG:3857', { 'INFO_FORMAT': 'application/json', 'propertyName': 'marrakec_3' });
 
         if (url) {
             $.getJSON(url, function (data) {
                 // console.log(data);
                 var feature = data.features[0];
                 var props = feature.properties;
-                content.innerHTML = "<h3> State : </h3> <p>" + props.state_name.toUpperCase() + "</p><br><h3> District : </h3> <p>" + props.dist_name.toUpperCase() + "</p>";
+                content.innerHTML = "<h3> State : </h3> <p>" + props.marrakec_3.toUpperCase() + "</p><br><h3> District : </h3> <p>" + props.marrakec_3.toUpperCase() + "</p>";
                 popup.setPosition(evt.coordinate);
                 container.style.display = "block";
             })

@@ -1,4 +1,5 @@
 <?php
+    $a=''; $b=''; $c='activ';$d=''; $e=''; $d="";$f=''; $g="";
     session_start();
       if(!isset($_SESSION['username'])){
         header('location:index.php');
@@ -29,7 +30,8 @@ foreach($result as $res){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
- 
+<link rel="shortcut icon" href="resources/images/logorm.png">
+<link href="sss.css" rel="stylesheet" >
       <title>Document</title>
 </head>
 <body>
@@ -58,32 +60,32 @@ foreach($result as $res){
                     <tbody>
                     
                         <tr>
-                            <td  class=" text-center"><lable class=" " for="">Prenom :  </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="" name="prenom" value="<?php echo $res['prenom'] ;?>"</td>
+                            <td  class=" text-center"><lable class=" " for="">Prénom :  </label></td>
+                            <td><input type="text" class=" form-control w-50 p-1 px-3 my-2" id="" name="prenom" value="<?php echo $res['prenom'] ;?>"</td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class=" " for="nom">Nom :  </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="" name="nom" value="<?php echo $res['nom'] ;?>"</td>
+                            <td><input type="text" class="form-control w-50 p-1 px-3 my-2" id="" name="nom" value="<?php echo $res['nom'] ;?>"</td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class="" for="email">Email :</label></td>
-                            <td><input type="email" class="p-1 px-3 my-2" id="" name="email"  value="<?php echo $res['email'] ;?>"</td>
+                            <td><input type="email" class="form-control w-50 p-1 px-3 my-2" id="" name="email"  value="<?php echo $res['email'] ;?>"</td>
                         </tr>
                         
                         <tr>
                             <td  class=" text-center"><lable class=" " for="password">Nom d'utilisateur </label></td>
-                            <td><input type="text" class="p-1 px-3 my-2" id="" name="username"  value="<?php echo $res['username'] ;?>"</td>
+                            <td><input type="text" class="form-control w-50 p-1 px-3 my-2" id="" name="username"  value="<?php echo $res['username'] ;?>"</td>
                         </tr>
                         <tr>
                             <td  class=" text-center"><lable class=" " for="password">Mot de passe  </label></td>
-                            <td><input type="password" class="p-1 px-3 my-2" id="" name="password"  value="<?php echo $res['password'] ;?>"</td>
+                            <td><input type="password" class="form-control w-50  p-1 px-3 my-2" id="" name="password"  value="<?php echo $res['password'] ;?>"</td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="err text-danger text-center my-3"></div>
                 <div class="text-center my-4">
-                    <a href="setting.php" class="btn bg-primary text-light" >Annuler</a>
-                    <button class="btn bg-primary text-light" name="updatesetting" >Modifier</button>
+                    <a href="setting.php" class="btn bg-secondary text-light" >Annuler</a>
+                    <button class="btn bg-secondary text-light" name="updatesetting" >Modifier</button>
 
                 </div>
                 
@@ -92,6 +94,9 @@ foreach($result as $res){
    </div>
   
     </div>
+    <?php
+        include("footer.php");
+        ?>
    
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+$a=''; $b=''; $c='';$d=''; $e='';$f='';$g="activ"; 
 session_start();
 include('database/connexion.php');
 
@@ -7,7 +8,7 @@ if(!isset($_SESSION['username'])){
 }else{
     $username=$_SESSION['username'];
 }
-$a='activ'; $b=''; $c='';$d=''; $e='';$f=''; $g="";$g="";
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -15,18 +16,26 @@ $a='activ'; $b=''; $c='';$d=''; $e='';$f=''; $g="";$g="";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">  
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <title>Portail de partage</title>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
-    <title>Mes couches</title>
+    
     <link rel="stylesheet" href="resources/ol/ol.css">
     <link rel="stylesheet" href="resources/layerswitcher/ol-layerswitcher.css">
     <link rel="stylesheet" href="sss.css">
+    
     <link rel="stylesheet" href="resources/fontawsome/css/all.css">
     <link rel="shortcut icon" href="resources/images/logorm.png">
     
 </head>
 
+    <title>Acceuil</title>
   </head>
+  
   <body>
 
   <?php
@@ -44,14 +53,12 @@ $a='activ'; $b=''; $c='';$d=''; $e='';$f=''; $g="";$g="";
       include("componemnts/navbar.php");
     }
 
-    $sql = 'select * from layers where numuser = ?';
-    $result= $con->prepare($sql);
-    $result->execute([$_SESSION['numuser']]); 
+    $sql = 'select * from layers';
+    $result = $con->query($sql);
+
     ?>
-    
-    
     <div class="d-flex">
-        <?php
+    <?php
              if($_SESSION['typeuser']=='admin'){
             include("componemnts/sidebaradmin.php");
             }else{
@@ -59,22 +66,48 @@ $a='activ'; $b=''; $c='';$d=''; $e='';$f=''; $g="";$g="";
             }
           ?>
         <div id="map" class="map"></div>
-        <div class="list-group bgdark w-25">
+        <div class="list-group rounded-0 bgdark w-25">
             <div class="form-outline mx-3 my-1">
               <input type="search" id="search" class="form-control"  onkeyup="myFunction()" placeholder="Chercher ici..." />
             </div>
-            <h5 class=" m-2 text-secondary">Mes couches :</h5>
-            <table id="layerstable">
-
-                <?php  foreach($result as $row){ ?>
-                <tr>
-                  <td><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light  rounded my-1 h6"><?php echo $row['layername']; ?></a></td>
-                </tr>
-                <?php } ?>  
-            </table> 
-        </div>
+            <h5 class=" m-2 text-secondary">Liste des couches :</h5>
+            
+            <table id="layerstable" class="">
+                <?php  foreach($result as $row){
+                  if($row['layerpartager']==true){ ?>
+                    <tr>
+                      <td scope="col"><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light  rounded my-1 h6"><?php echo $row['layername']; ?></a></td>
+                    </tr>
+                <?php }}?>
+                <?php if(isset($_SESSION['username'])){
+                  ?>
+                  <tr>
+                      <td scope="col"><h5 class=" m-2 text-secondary">Couches non partages :</h5></td>
+                  </tr>
+                <?php
+                   $sql = 'select * from layers';
+                   $result = $con->query($sql);
+                   foreach($result as $row){
+                 if($_SESSION['voirlayernonpartager']==true || $_SESSION['numuser']==$row['numuser'] ){
+                   
+                     if($row['layerpartager']==false){?>
+                     <tr>
+                       <td scope="col"><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light border-0 rounded my-1"><?php echo $row['layername']; ?></a></td>
+                     </tr>
+                 <?php
+                     }}
+                   else{ ?>
+                        <tr>
+                           <td  scope="col"><div class="text-warning mx-2 ">Vous n'avez pas le droit de voir les couches non partagées de les autres utilisateurs.</div></td>
+                       </tr>
+                  <?php }}}
+                  ?>
+                 
+            </table>
+            
+             
+          </div>
     </div>
-    
     
     
     <div id="popup" class="ol-popup">
@@ -185,25 +218,38 @@ $a='activ'; $b=''; $c='';$d=''; $e='';$f=''; $g="";$g="";
         <select name="editingLayer" id="editingLayer">
         </select>
     </div>
-        <?php
-            include("footer.php");
+    <?php
+        include("footer.php");
         ?>
-
+    
 
     <script src="resources/ol/ol.js"></script>
-    <script src="resources/layerswitcher/ol-layerswitcher.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="main.js"></script>
-    <script>
+          <script src="resources/layerswitcher/ol-layerswitcher.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="main.js"></script>
+          <script src="JS/search.js"></script>
+          <script>
       <?php
 
-        $getname = "SELECT layername FROM layers ;";
+        $getname = "SELECT layername FROM layers where layerpartager=true ;";
         $namelayy= $con->query($getname);
-        $visi=false;
+        $visi=true;
         foreach($namelayy as $namelay){
             $projet=$namelay['layername'];  include("projets/map.php");
 
         }
+        if(isset($_SESSION['username'])){
+          $getname = "SELECT * FROM layers where layerpartager=false ;";
+          $namelayy= $con->query($getname);
+          $visi=true;
+          foreach($namelayy as $namelay){
+            if($_SESSION['voirlayernonpartager']==true || $_SESSION['numuser']==$namelay['numuser'] ){
+                  if($namelay['layerpartager']==false){
+                    $projet=$namelay['layername'];  include("projets/map.php");
+                  }
+            }
+      }
+    }
         ?>
     </script>
  

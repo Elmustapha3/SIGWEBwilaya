@@ -22,19 +22,25 @@ if(isset($_SESSION['username'])){
     <title>Portail de partage</title>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     
     <link rel="stylesheet" href="resources/ol/ol.css">
     <link rel="stylesheet" href="resources/layerswitcher/ol-layerswitcher.css">
     <link rel="stylesheet" href="sss.css">
     
     <link rel="stylesheet" href="resources/fontawsome/css/all.css">
-    <link rel="shortcut icon" href="resources/images/map.png">
+    <link rel="shortcut icon" href="resources/images/logorm.png">
     
 </head>
 
     <title>Acceuil</title>
   </head>
-  
+  <style>
+.over{
+  overflow: auto;
+}
+  </style>
   <body>
 
   <?php
@@ -60,46 +66,47 @@ if(isset($_SESSION['username'])){
       <div class="">
         
       </div>
-        <div id="map" class="map">
-  
-        </div>
-        <div class="list-group bg-dark w-25">
+        <div id="map" class="map"></div>
+        <div class="list-group rounded-0 bgdark w-25">
             <div class="form-outline mx-3 my-1">
               <input type="search" id="search" class="form-control"  onkeyup="myFunction()" placeholder="Chercher ici..." />
             </div>
             <h5 class=" m-2 text-secondary">Liste des couches :</h5>
             
-            <table id="layerstable">
+            <div class="over">
+            <table id="layerstable" class="w-100">
                 <?php  foreach($result as $row){
                   if($row['layerpartager']==true){ ?>
                     <tr>
-                      <td><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light border rounded my-1"><?php echo $row['layername']; ?></a></td>
+                      <td scope="col"><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light  rounded my-1 h6"><?php echo $row['layername']; ?></a></td>
                     </tr>
                 <?php }}?>
                 <?php if(isset($_SESSION['username'])){
                   ?>
                   <tr>
-                      <td><h5 class=" m-2 text-secondary">Couches non partages :</h5></td>
+                      <td scope="col"><h5 class=" m-2 text-secondary">Couches non partages :</h5></td>
                   </tr>
                 <?php
-                if($_SESSION['voirlayernonpartager']==true){
                   $sql = 'select * from layers';
                   $result = $con->query($sql);
                   foreach($result as $row){
+                if($_SESSION['voirlayernonpartager']==true || $_SESSION['numuser']==$row['numuser'] ){
+                  
                     if($row['layerpartager']==false){?>
                     <tr>
-                      <td><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light border rounded my-1"><?php echo $row['layername']; ?></a></td>
+                      <td scope="col"><a href="layer.php?idlayer=<?php echo $row['idlayer']; ?>" class="list-group-item list-group-item-action bg-dark text-light border-0 rounded my-1"><?php echo $row['layername']; ?></a></td>
                     </tr>
                 <?php
                     }}
-                  }else{ ?>
+                  else{ ?>
                        <tr>
-                          <td><div class="text-warning mx-2 ">Vous avez pas le droit de voir les couche non partager</div></td>
+                          <td  scope="col"><div class="text-warning mx-2 ">Vous n'avez pas le droit de voir les couches non partagées de les autres utilisateurs.</div></td>
                       </tr>
-                 <?php }}
+                 <?php }}}
                  ?>
                 
            </table>
+            </div>
             
              
           </div>
@@ -215,24 +222,81 @@ if(isset($_SESSION['username'])){
         </select>
     </div>
 
-    
+    <?php  include('footer.php');?>
 
-    <script src="resources/ol/ol.js"></script>
+          <script src="resources/ol/ol.js"></script>
           <script src="resources/layerswitcher/ol-layerswitcher.js"></script>
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
           <script src="main.js"></script>
           <script src="JS/search.js"></script>
           <script>
       <?php
 
-        $getname = "SELECT layername FROM layers ;";
-        $namelayy= $con->query($getname);
-        $visi=true;
-        foreach($namelayy as $namelay){
-            $projet=$namelay['layername'];  include("projets/map.php");
+          $getname = "SELECT layername FROM layers where layerpartager=true ;";
+          $namelayy= $con->query($getname);
+          $visi=true;
+          foreach($namelayy as $namelay){
+              $projet=$namelay['layername'];  include("projets/map.php");
+          }
+          if(isset($_SESSION['username'])){
+            $getname = "SELECT * FROM layers where layerpartager=false ;";
+            $namelayy= $con->query($getname);
+            $visi=true;
+            foreach($namelayy as $namelay){
+              if($_SESSION['voirlayernonpartager']==true || $_SESSION['numuser']==$namelay['numuser'] ){
+                    if($namelay['layerpartager']==false){
+                      $projet=$namelay['layername'];  include("projets/map.php");
+                    }
+              }
+            }
+          }
+          ?>
+         map.on('click', function(evt) {
 
-        }
-        ?>
+      // Hide existing popup and reset it's offset
+      popup.hide();
+      popup.setOffset([0, 0]);
+
+      // Attempt to find a marker from the planningAppsLayer
+      var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
+          return feature;
+      });
+
+      if (feature) {
+
+          var coord = feature.getGeometry().getCoordinates();
+          var props = feature.getProperties();
+          var info = "<h2><a href='" + props.caseurl + "'>" + props.casereference + "</a></h2>";
+              info += "<p>" + props.locationtext + "</p>";
+              info += "<p>Status: " + props.status + " " + props.statusdesc + "</p>";
+          // Offset the popup so it points at the middle of the marker not the tip
+          popup.setOffset([0, -22]);
+          popup.show(coord, info);
+
+      } else {
+
+          var url = Communes_Region
+                      .getSource()
+                      .getGetFeatureInfoUrl(
+                          evt.coordinate,
+                          map.getView().getResolution(),
+                          map.getView().getProjection(),
+                          {
+                              'INFO_FORMAT': 'application/json',
+                              'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
+                          }
+                      );
+
+          reqwest({
+              url: url,
+              type: 'json',
+          }).then(function (data) {
+              var feature = data.features[0];
+              var props = feature.properties;
+              var info = "<h2>" + props.NAME + "</h2><p>" + props.DESCRIPTIO + "</p>";
+              popup.show(evt.coordinate, info);
+          });
+
+      }});
     </script>
  
 

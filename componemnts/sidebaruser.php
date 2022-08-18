@@ -16,6 +16,7 @@
     height: 100vh;
     
 }
+
 .activ{
   background-color:#cccccc !important;
     color: #000 !important;
@@ -25,18 +26,19 @@
 </style>
 <body>
     <div class="hig w-25 bg-dark">
-        <div class="list-group hig bg-dark">
+        <div class="list-group hig bgdark">
             <form action="" method="post"> 
             <h4  class="list-group-item list-group-item-action bg-secondary text-light">Configuration</h4>
             
                 <!--<a href="mesprojets.php" class="list-group-item list-group-item-action">Mes projets</a>
                 <a href="projetspartager.php" class="list-group-item list-group-item-action">Liste des projets partagers</a>
                 <a href="projetsnonpartager.php" class="list-group-item list-group-item-action">Liste des projets non partagers</a>-->
-                <a href="mylayers.php" class="list-group-item list-group-item-action  bg-dark text-light <?php echo $a; ?>" >Mes couches</a>
-                <a href="newlayer.php" class="list-group-item list-group-item-action bg-dark text-light <?php echo $b; ?>">Nouveau couche</a>
+                <a href="alllayers.php" class="list-group-item list-group-item-action h6  bgdark text-light <?php echo $g; ?>">Toutes les couches</a>
+                <a href="mylayers.php" class=" btn list-group-item list-group-item-action h6  bgdark text-light <?php echo $a; ?>" >Mes couches</a>
+                <a href="newlayer.php" class=" btn list-group-item list-group-item-action   h6 bgdark text-light <?php echo $b; ?>">Nouvelle couche</a>
                 <!--<a href="newprojet.php" class="list-group-item list-group-item-action">Nouveau projet</a>-->
-                <a href="setting.php?cni=<?php echo $_SESSION['cni']; ?>" class="list-group-item list-group-item-action bg-dark text-light <?php echo $c; ?>">Settings</a>
-                <button class="btn text-start w-100 bg-ligh bg-dark text-light " name="log">Se déconnecter</button>
+                <a href="setting.php?cni=<?php echo $_SESSION['cni']; ?>" class="h6 btn list-group-item list-group-item-action rounder   bgdark text-light <?php echo $c; ?>">Profil</a>
+                <button class="btn text-start w-100 bg-ligh  h6  bgdark text-light " name="log">Se déconnecter</button>
             </form>
         </div>
     </div>

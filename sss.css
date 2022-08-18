@@ -1,9 +1,12 @@
 
+
+
 body {
     margin: 0;
     padding: 0;
     background-image: url("back.jpg");
     background-color: #cccccc;
+    
    }
   #map{
      
@@ -17,9 +20,7 @@ body {
   }
   
   
-  .ol-popup {
-  display: none;
-  }
+ 
   
   .mousePosition {
     position: absolute;
@@ -81,14 +82,14 @@ body {
   
   .myButton {
     margin-left: 4px;
-    background-color:rgb(45, 43, 43);
+    background-color:#000;
     color: #505152ca;
-    padding: 3px ;
+    padding-right: 5px;
     font-weight: 700;
     text-align: center;
     height: 35px;
     width: 35px;
-    border-radius: 0px;
+    border-radius: 8px;
     border: none;
     /* align-items: center; */
     /* padding-top: 3px; */
@@ -105,37 +106,9 @@ body {
   .myButton.clicked:hover{
   background-color: rgba(22, 170, 35, 1);
   }
-  .myButtons {
-  margin-left: 10px;
-  background-color:rgb(51, 44, 240);
-  color: #505152ca;
-  padding: 3px ;
-  font-weight: 700;
-  text-align: center;
-  height: 35px;
-  width: 35px;
-  border-radius: 4px;
-  border: none;
-  /* align-items: center; */
-  /* padding-top: 3px; */
-  }
+ 
   
-  .myButtons:hover{
-  background-color: rgb(0, 60, 136, 1);
-  }
   
-  .myButtons.clicked{
-  background-color: rgba(22, 170, 35, 0.8);
-  }
-  
-  .myButtons.clicked:hover{
-  background-color: rgba(22, 170, 35, 1);
-  }
-  /* .homeButtonDiv{
-  position: relative;
-  display: block;
-  margin: 10px auto auto 10px;
-  } */
   
   .toolbarDiv {
   position: absolute;
@@ -143,6 +116,13 @@ body {
   /* margin: 10px auto auto 10px; */
   top: 10px;
   left: 10px;
+  }
+  
+  .bgdark{
+    background-color: #000 !important;
+  }
+  .over{
+    overflow: auto;
   }
   
   .toolbarDivRight {
@@ -156,7 +136,7 @@ body {
   position: absolute;
   display: block;
   /* margin: 10px auto auto 10px; */
-  top: 56px;
+  top: 10px;
   right: 10px;
   }
   
@@ -281,7 +261,7 @@ body {
   .layersDiv {
     position: absolute;
     display: none;
-    top: 310px;
+    top: 280px;
     right: 350px;
     /* margin: 65px auto auto 45px; */
     width: 255px;
@@ -290,7 +270,7 @@ body {
     font-family: "Gill Sans", sans-serif;
     font-size: 1em;
     line-height: 1.30;
-    border-radius: 5px;
+    border-radius: 10px;
     border: 1px solid #262424;
     box-shadow: 0px 0px 15px rgba(255, 245, 245, 0.5);
     /* z-index: 4; */
@@ -314,7 +294,7 @@ body {
   .attQueryDiv {
     position: absolute;
     display: none;
-    top: 310px;
+    top: 280px;
     right: 820px;
     /* margin: 65px auto auto 45px; */
     width: 250px;
@@ -323,7 +303,7 @@ body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
     line-height: 1.45;
-    border-radius: 2px;
+    border-radius: 10px;
     border: 1px solid #d1d1d1;
     box-shadow: 0px 0px 15px rgba(100, 100, 100, 0.5);
     /* z-index: 4; */
@@ -415,6 +395,7 @@ body {
     background-color: rgb(0, 0, 0);
     height: 35px;
     margin: 0px 0px 10px 0px;
+    border-radius: 10px;
   }
   
   #headerDiv label {
@@ -543,7 +524,7 @@ body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1em;
     line-height: 1.45;
-    border-radius: 2px;
+    border-radius: 10px;
     border: 1px solid #d1d1d1;
     box-shadow: 0px 0px 15px rgba(100, 100, 100, 0.5);
     /* z-index: 4; */

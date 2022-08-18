@@ -9,6 +9,10 @@ if(!isset($_SESSION['username'])){
 
 if(isset($_GET['idlayer'])){
     $idlayer = $_GET['idlayer'];
+    }elseif(isset($_SESSION['idlaytableattupdated'])){
+        $idlayer=$_SESSION['idlaytableattupdated'];
+    }else{
+        header('location:alllayers.php');
     }
 
 include('database/connexion.php');
@@ -21,7 +25,7 @@ include('database/connexion.php');
     }
 
 
-    $sql = 'SELECT * FROM public."'.$layname.'"';
+    $sql = 'SELECT * FROM public."'.$layname.'" ORDER BY fid ASC';
     $table= $con->query($sql);
     //$table= $con->prepare($sql);
     //$table->execute([$layname]);
@@ -41,11 +45,17 @@ include('database/connexion.php');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="css.css"/>
+    <link rel="stylesheet" href="sss.css"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
- 
+    <link rel="shortcut icon" href="resources/images/logorm.png">
+
       <title><?php echo $layname; ?></title>
 </head>
+<style>
+.over{
+    overflow:auto;
+}
+</style>
 <body>
     <?php
     
@@ -66,42 +76,42 @@ include('database/connexion.php');
             <?php
                 if(isset($_SESSION['numuser'])){
                     if($_SESSION['modifiertable']==true){
-                    echo '<a href="#" class="btn btn-primary">Modifier la table</a>';
+                    echo '<a href="updatetableatt.php?idlayer='.$idlayer.'" class="btn btn-primary">Modifier la table</a>';
                     } 
                 }
             ?>
             <a href="layer.php?idlayer=<?php echo $idlayer; ?>" class="btn btn-primary">retour</a></br>
         </div>
-                    <table class="table table-striped text-center">
-                        
-                            <?php 
-                            echo '<tr>';
-                            for($i=0;$i<count($result);$i++){                            
-                                    echo '<th class="p-2 px-3" scope="row">'.$result[$i][0].'</th>';
+                   <div class="over">
+                        <table class="table table-striped text-center">
+                                
+                                <?php 
+                                echo '<tr>';
+                                for($i=0;$i<count($result);$i++){                            
+                                        echo '<th class="p-2 px-3" scope="row">'.$result[$i][0].'</th>';
+                                    }
+                                echo '</tr>';
+                                foreach($table as $row){   
+                                echo '<tr>';
+                                for($i=0;$i<count($result);$i++){                            
+                                    echo '<th class="p-2 px-3" scope="row">'.$row[$result[$i][0]].'</th>';
                                 }
-                            echo '</tr>';
-                            foreach($table as $row){   
-                            echo '<tr>';
-                            for($i=0;$i<count($result);$i++){                            
-                                echo '<th class="p-2 px-3" scope="row">'.$row[$result[$i][0]].'</th>';
-                            }
-                                                        
-                            echo '</tr>';
-                            }
+                                                            
+                                echo '</tr>';
+                                }
 
-                           
-                                
-                                
                             
+                                    
+                                    
+                                
 
-                            ?>
-                        
-                    </table>
+                                ?>
+                            
+                        </table>
+                   </div>
     
+                   <?php  include('footer.php');?>
 
-    <?php
-       // include("componemnts/footer.php");
-    ?>
             
 </body>
 </html>

@@ -18,9 +18,10 @@
     color: #000 !important;
   }
 
+
 </style>
 <body>
-    <div class="hig w-25 bg-dark">
+    <div class="hig w-25 bgdark">
     <form action="" method="post">
         <div class="list-group ">
              
@@ -28,13 +29,14 @@
             
                 <!--<a href="administration.php" class="list-group-item list-group-item-action">Liste des projets partagers</a>
                 <a href="projetsnonpartager.php" class="list-group-item list-group-item-action">Liste des projets non partagers</a>-->
-                <a href="mylayers.php" class="list-group-item list-group-item-action  bg-dark text-light <?php echo $a; ?>">Mes couches</a>
-                <a href="newlayer.php" class="list-group-item list-group-item-action bg-dark text-light <?php echo $b; ?>">Nouveau couche</a>
-                <a href="administrerUser.php" class="list-group-item list-group-item-action bg-dark text-light <?php echo $d; ?>">Les utilisteurs</a>
-                <a href="permission.php" class="list-group-item list-group-item-action bg-dark text-light <?php echo $e; ?>">Les droits d'accees</a>
-                <a href="postravail.php" class="list-group-item list-group-item-action bg-dark text-light <?php echo $f; ?>">Les postes de travails</a>
-                <a href="setting.php?cni=<?php echo $_SESSION['cni']; ?>" class="list-group-item list-group-item-action bg-dark text-light <?php echo $c; ?>">Settings</a>
-                <button class="btn text-start w-100   bg-dark text-light" name="log">Se déconnecter</button>
+                <a href="alllayers.php" class="btn list-group-item list-group-item-action  bgdark text-light <?php echo $g; ?>">Toutes les couches</a>
+                <a href="mylayers.php" class="btn list-group-item list-group-item-action  bgdark text-light <?php echo $a; ?>">Mes couches</a>
+                <a href="newlayer.php" class="btn list-group-item list-group-item-action bgdark text-light <?php echo $b; ?>">Nouvelle couche</a>
+                <a href="administrerUser.php" class="btn list-group-item list-group-item-action bgdark text-light <?php echo $d; ?>">Les utilisateurs</a>
+                <a href="permission.php" class="btn list-group-item list-group-item-action bgdark text-light <?php echo $e; ?>">Les droits d'accès</a>
+                <a href="postravail.php" class="btn list-group-item list-group-item-action bgdark text-light <?php echo $f; ?>">Les postes de travails</a>
+                <a href="setting.php?cni=<?php echo $_SESSION['cni']; ?>" class=" btn list-group-item list-group-item-action bgdark text-light <?php echo $c; ?>">Profil</a>
+                <button class="btn text-start w-100   bgdark text-light" name="log">Se déconnecter</button>
             
         </div>
     </form>
